@@ -1,0 +1,13 @@
+<h1 tal:content="com_meego_planet/title">Latest news</h1>
+
+<ol tal:condition="com_meego_planet/items" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:dcterms="http://purl.org/dc/terms/" class="news">
+    <li tal:repeat="item com_meego_planet/items">
+        <article tal:attributes="about item/url" typeof="sioc:Post">
+            <h1>
+                <span property="dcterms:created" tal:content="php: item.metadata.published.format('Y-m-d')">1999-05-07</span>
+                <a tal:content="item/title" tal:attributes="href item/url" property="dcterms:title">Blog post</a>
+            </h1>
+            <div tal:content="structure item/content" property="sioc:content">Lorem ipsum</div>
+        </article>
+    </li>
+</ol>
