@@ -35,22 +35,16 @@ routes:
         controller: com_meego_planet_controllers_feeds
         action: create
         template_aliases: 
-            content: cmp-show-form
-    feed_read:
-        path: /feeds/{$guid:item}
-        controller: com_meego_planet_controllers_feeds
-        action: read
-        template_aliases: 
-            content: cmp-show-feed
+            content: cmp-edit-feed
     feed_update:
-        path: /feeds/{$guid:item}/update
+        path: /feeds/{$guid:feed}/update
         controller: com_meego_planet_controllers_feeds
         action: update
         template_aliases: 
-            content: cmp-show-form
+            content: cmp-edit-feed
     feed_delete:
-        path: /feeds/{$guid:item}/delete
+        path: /feeds/{$guid:feed}/delete
         controller: com_meego_planet_controllers_feeds
         action: delete
         template_aliases: 
-            content: cmp-show-delete
+            content: cmp-delete-feed
