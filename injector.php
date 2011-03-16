@@ -12,5 +12,6 @@ class com_meego_planet_injector
         // Replace the default MeeGo sidebar with our own
         $route = $request->get_route();
         $route->template_aliases['content-sidebar'] = 'cmp-show-sidebar';
+        $route->template_aliases['main-menu'] = 'cmp-show-main_menu';
     }
 }
