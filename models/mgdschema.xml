@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <type name="com_meego_planet_feed" table="com_meego_planet_feed">
+        <user_values>
+            <typeof>http://rdfs.org/sioc/ns#Forum</typeof>
+            <namespaces>sioc:http://rdfs.org/sioc/ns#,dcterms:http://purl.org/dc/terms/</namespaces>
+        </user_values>
+        <property name="id" type="unsigned integer" primaryfield="id">
+            <description>Local non-replication-safe database identifier</description>
+        </property>
+        <property name="url" type="string">
+            <description>URL of the blog</description>
+        </property>
+        <property name="title" type="string">
+            <description>Title of the article</description>
+            <required>true</required>
+            <property>dcterms:title</property>
+        </property>
+        <property name="feed" type="string">
+            <description>URL of the blog feed</description>
+            <required>true</required>
+        </property>
+        <property name="author" type="unsigned integer" link="midgard_person:id">
+            <description>Author of the blog</description>
+            <property>sioc:has_creator</property>
+            <required>true</required>
+        </property>
+    </type>
+    
+    <type name="com_meego_planet_item" table="com_meego_planet_item" parent="com_meego_planet_feed">
+        <user_values>
+            <typeof>http://rdfs.org/sioc/ns#Post</typeof>
+            <namespaces>sioc:http://rdfs.org/sioc/ns#,dcterms:http://purl.org/dc/terms/</namespaces>
+        </user_values>
+        <property name="id" type="unsigned integer" primaryfield="id">
+            <description>Local non-replication-safe database identifier</description>
+        </property>
+        <property name="url" type="string">
+            <description>Permalink URL for the item</description>
+        </property>
+        <property name="title" type="string">
+            <description>Title of the article</description>
+            <required>true</required>
+            <property>dcterms:title</property>
+        </property>
+        <property name="content" type="text">
+            <description>Content of the article</description>
+            <contenttype>html</contenttype>
+            <property>sioc:content</property>
+        </property>
+        <property name="feed" type="unsigned integer" link="com_meego_planet_feed:id" parentfield="feed">
+            <description>Blog source the item comes from</description>
+            <property>sioc:has_container</property>
+        </property>
+    </type>
+</Schema>
