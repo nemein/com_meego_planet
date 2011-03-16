@@ -8,7 +8,8 @@ class com_meego_planet_controllers_top
 
     public function get_items(array $args)
     {
-        $this->data['title'] = 'Top items';
+        $this->data['title'] = 'MeeGo Planet: Top Voted Posts';
+        midgardmvc_core::get_instance()->head->set_title($this->data['title']);
         
         // FIXME: Query for top items instead
         $q = new midgard_query_select
