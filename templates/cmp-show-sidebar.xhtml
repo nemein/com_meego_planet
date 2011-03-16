@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="section">
-                <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+                    <script src="http://widgets.twimg.com/j/2/widget.js"></script>
                     <script>
                     new TWTR.Widget({
                       version: 2,
@@ -28,23 +28,23 @@
                       height: 300,
                       theme: {
                         shell: {
-                          background: '#929294',
+                          background: '#808080',
                           color: '#ffffff'
                         },
                         tweets: {
-                          background: '#000000',
-                          color: '#ffffff',
-                          links: '#4aed05'
+                          background: '#ffffff',
+                          color: '#000000',
+                          links: '#808080'
                         }
                       },
                       features: {
                         scrollbar: false,
                         loop: false,
-                        live: false,
-                        hashtags: true,
+                        live: true,
+                        hashtags: false,
                         timestamp: true,
-                        avatars: false,
-                        behavior: 'all'
+                        avatars: true,
+                        behavior: 'default'
                       }
                     }).render().setUser('meegocom').start();
                     </script>
