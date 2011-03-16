@@ -1,0 +1,56 @@
+requires:
+    midgardmvc_helper_forms:
+        - {type: github, user: midgardproject, repository: midgardmvc_helper_forms, branch: master}
+requires_pear:
+    Feed:
+        channel: components.ez.no
+template_injector: com_meego_planet_injector
+routes:
+    index:
+        path: /
+        controller: com_meego_planet_controllers_top
+        action: items
+        template_aliases: 
+            content: cmp-show-latest
+    latest:
+        path: /latest
+        controller: com_meego_planet_controllers_latest
+        action: items
+        template_aliases: 
+            content: cmp-show-latest
+    latest_page:
+        path: /latest/{$int:page}
+        controller: com_meego_planet_controllers_latest
+        action: items
+        template_aliases: 
+            content: cmp-show-latest
+    feeds:
+        path: /feeds
+        controller: com_meego_planet_controllers_feeds
+        action: list
+        template_aliases:
+            content: cmp-show-feeds
+    feed_create:
+        path: /feeds/create/
+        controller: com_meego_planet_controllers_feeds
+        action: create
+        template_aliases: 
+            content: cmp-show-form
+    feed_read:
+        path: /feeds/{$guid:item}
+        controller: com_meego_planet_controllers_feeds
+        action: read
+        template_aliases: 
+            content: cmp-show-feed
+    feed_update:
+        path: /feeds/{$guid:item}/update
+        controller: com_meego_planet_controllers_feeds
+        action: update
+        template_aliases: 
+            content: cmp-show-form
+    feed_delete:
+        path: /feeds/{$guid:item}/delete
+        controller: com_meego_planet_controllers_feeds
+        action: delete
+        template_aliases: 
+            content: cmp-show-delete
