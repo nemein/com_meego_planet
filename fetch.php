@@ -30,11 +30,52 @@ class com_meego_planet_fetch
         }
         $items = $fetched->item;
         array_walk($items, $item_callback, $feed);
+        self::remove_missing($items, $feed);
+    }
+    
+    public static function remove_missing(array $items, com_meego_planet_feed $feed)
+    {
+        $urls = array_map
+        (
+            'com_meego_planet_fetch::get_item_link',
+            $items
+        );
+        array_walk
+        (
+            com_meego_planet_utils::get_items
+            (
+                function($q) use ($feed)
+                {
+                    $q->set_constraint
+                    (
+                        new midgard_query_constraint
+                        (
+                            new midgard_query_property('feed'),
+                            '=',
+                            new midgard_query_value($feed->id)
+                        )
+                    );
+                },
+                'com_meego_planet_item'
+            ),
+            function ($item) use ($urls)
+            {
+                if (!in_array($item->url, $urls))
+                {
+                    $item->delete();
+                }
+            }
+        );
+    }
+    
+    public static function get_item_link(ezcFeedEntryElement $item)
+    {
+        return $item->link[0]->href;
     }
     
     public static function import_item(ezcFeedEntryElement $feed_item, $index, com_meego_planet_feed $feed)
     {
-        $item = self::get_item_by_url($feed_item->link[0]->href);
+        $item = self::get_item_by_url(self::get_item_link($feed_item));
         $item->feed = $feed->id;
         
         $dirty = false;
