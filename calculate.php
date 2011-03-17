@@ -8,7 +8,7 @@ class com_meego_planet_calculate
     
     public static function delicious($url, $modifier = 1)
     {
-        $json = file_get_contents('http://badges.del.icio.us/feeds/json/url/data?hash=' . md5($url));
+        $json = @file_get_contents('http://badges.del.icio.us/feeds/json/url/data?hash=' . md5($url));
         if (empty($json))
         {
             return self::prepare_return(0, $modifier);
@@ -25,7 +25,7 @@ class com_meego_planet_calculate
 
     public static function twitter($url, $modifier = 1)
     {
-        $json = file_get_contents('http://search.twitter.com/search.json?q=' . urlencode($url));
+        $json = @file_get_contents('http://search.twitter.com/search.json?q=' . urlencode($url));
         if (empty($json))
         {
             return self::prepare_return(0, $modifier);
@@ -43,7 +43,7 @@ class com_meego_planet_calculate
     public static function facebook($url, $modifier = 1)
     {
         $fql = 'SELECT total_count from link_stat where url="' . rawurlencode($url) . '"';
-        $json = file_get_contents('http://api.facebook.com/method/fql.query?format=json&query=' . urlencode($fql));
+        $json = @file_get_contents('http://api.facebook.com/method/fql.query?format=json&query=' . urlencode($fql));
         if (empty($json))
         {
             return self::prepare_return(0, $modifier);
