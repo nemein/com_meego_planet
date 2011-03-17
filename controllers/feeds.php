@@ -82,4 +82,9 @@ class com_meego_planet_controllers_feeds extends midgardmvc_core_controllers_bas
             $this->request
         );
     }
+
+    public function load_form()
+    {
+        $this->form = midgardmvc_helper_forms_mgdschema::create($this->object, false);
+    }
 }
