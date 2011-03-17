@@ -13,5 +13,15 @@ class com_meego_planet_injector
         $route = $request->get_route();
         $route->template_aliases['content-sidebar'] = 'cmp-show-sidebar';
         $route->template_aliases['main-menu'] = 'cmp-show-main_menu';
+
+        midgardmvc_core::get_instance()->head->add_link
+        (
+            array
+            (
+                'rel' => 'stylesheet',
+                'type' => 'text/css',
+                'href' => MIDGARDMVC_STATIC_URL . '/com_meego_planet/planet.css'
+            )
+        );
     }
 }

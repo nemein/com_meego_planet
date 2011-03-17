@@ -1,0 +1,32 @@
+ol.news {
+    padding-left: 0px;
+    margin-left: 0px;
+}
+ol.news li {
+    list-style: none;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+
+/* Main content area */
+#drupal_content .section{
+    margin-right:10px;
+    width:560px;
+    float: left;
+}
+
+/* Sidebar */
+#drupal_content .region .section {
+    border:1px solid #CCCCCC;
+    margin:1px;
+    padding:2px;
+    width:180px;
+    display: block;
+    clear: both;
+    margin-bottom: 10px;
+}
+
+.region .section li {
+    list-style:none;
+    padding-left:5px;
+}
