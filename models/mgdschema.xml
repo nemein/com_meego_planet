@@ -56,5 +56,6 @@
     
     <type name="com_meego_planet_item_with_score" extends="com_meego_planet_item">
         <property name="score" type="float" />
+        <property name="agedscore" type="float" />
     </type>
 </Schema>

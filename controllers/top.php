@@ -11,23 +11,18 @@ class com_meego_planet_controllers_top
         $this->data['title'] = 'MeeGo Planet: Popular Posts';
         midgardmvc_core::get_instance()->head->set_title($this->data['title']);
         
-        // FIXME: Query for top items instead
-        $q = new midgard_query_select
-        (
-            new midgard_query_storage('com_meego_planet_item_with_author')
-        );
-        $q->add_order(new midgard_query_property('score'), SORT_DESC);
-
-        $q->execute();
-        
         $this->data['items'] = array_map
         (
-            function($item)
-            {
-                // TODO: Get author and avatar
-                return $item;
-            },
-            $q->list_objects()
+            // Prepare all resulting items for display
+            'com_meego_planet_utils::prepare_item_for_display',
+            com_meego_planet_utils::get_items
+            (
+                function($q)
+                {
+                    // Primarily order by calculated score tuned by age
+                    $q->add_order(new midgard_query_property('agedscore'), SORT_DESC);
+                }
+            )
         );
     }
 }

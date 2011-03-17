@@ -11,30 +11,20 @@ class com_meego_planet_controllers_latest
         $this->data['title'] = 'Planet MeeGo: Latest blogs';
         midgardmvc_core::get_instance()->head->set_title($this->data['title']);
         
-        // Query for latest items
-        $q = new midgard_query_select
-        (
-            new midgard_query_storage('com_meego_planet_item_with_author')
-        );
-        $q->add_order(new midgard_query_property('published'), SORT_DESC);
-        
-        // Handle paging
-        $this->check_page($args, $q);
-        
-        $q->execute();
-        
         $this->data['items'] = array_map
         (
-            function($item)
-            {
-                // TODO: Get author and avatar
-                return $item;
-            },
-            $q->list_objects()
+            // Prepare all resulting items for display
+            'com_meego_planet_utils::prepare_item_for_display',
+            com_meego_planet_utils::get_items
+            (
+                function($q) use ($args)
+                {
+                    // Order by publication date
+                    $q->add_order(new midgard_query_property('published'), SORT_DESC);
+                    // Handle paging
+                    com_meego_planet_utils::page_by_args($q, $args);
+                }
+            )
         );
-    }
-    
-    private function check_page(array $args, midgard_query_select $q)
-    {
     }
 }

@@ -9,6 +9,7 @@
         <property name="content" use="com_meego_planet_item_with_score:content" />
         <property name="published" use="com_meego_planet_item_with_score:metadata.published" />
         <property name="score" use="com_meego_planet_item_with_score:score" />
+        <property name="agedscore" use="com_meego_planet_item_with_score:agedscore" />
         
         <!-- Properties from person -->
         <property name="firstname" use="midgard_person:firstname" />
