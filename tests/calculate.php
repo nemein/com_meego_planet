@@ -11,7 +11,7 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
     public function assert_each_url($url, $index, $callback)
     {
         $score = call_user_func($callback, $url);
-        $this->assertType('integer', $score);
+        $this->assertType('float', $score);
     }
     
     private function assert_urls($callback)
@@ -57,5 +57,23 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
         // Test also with an URL we know has been posted
         $score = com_meego_planet_calculate::hackernews('http://bergie.iki.fi/blog/introducing_the_midgard_create_user_interface/');
         $this->assertGreaterThanOrEqual(100, $score);
+    }
+    
+    public function test_age()
+    {
+        $penalty = com_meego_planet_calculate::age(new DateTime(), 1);
+        $this->assertType('float', $penalty);
+        $this->assertEquals(0.0, $penalty);
+        
+        $date = new DateTime();
+        $date->setTimestamp(time() - 3600);
+        $penalty = com_meego_planet_calculate::age($date, 0.25);
+        $this->assertType('float', $penalty);
+        $this->assertEquals(-0.25, $penalty);
+    }
+    
+    public function test_all()
+    {
+        $this->assert_urls('com_meego_planet_calculate::all');
     }
 }

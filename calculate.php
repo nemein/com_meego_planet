@@ -1,73 +1,78 @@
 <?php
 class com_meego_planet_calculate
 {
-    public static function delicious($url)
+    private static function prepare_return($value, $modifier)
+    {
+        return (float) $value * $modifier;
+    }
+    
+    public static function delicious($url, $modifier = 1)
     {
         $json = file_get_contents('http://badges.del.icio.us/feeds/json/url/data?hash=' . md5($url));
         if (empty($json))
         {
-            return 0;
+            return self::prepare_return(0, $modifier);
         }
         
         $item_data = json_decode($json);
         if (!isset($item_data[0]->total_posts))
         {
-            return 0;
+            return self::prepare_return(0, $modifier);
         }
         
-        return $item_data[0]->total_posts;
+        return self::prepare_return($item_data[0]->total_posts, $modifier);
     }
 
-    public static function twitter($url)
+    public static function twitter($url, $modifier = 1)
     {
         $json = file_get_contents('http://search.twitter.com/search.json?q=' . urlencode($url));
         if (empty($json))
         {
-            return 0;
+            return self::prepare_return(0, $modifier);
         }
         
         $item_data = json_decode($json);
         if (!isset($item_data->results))
         {
-            return 0;
+            return self::prepare_return(0, $modifier);
         }
         
-        return count($item_data->results);
+        return self::prepare_return(count($item_data->results), $modifier);
     }
 
-    public static function facebook($url)
+    public static function facebook($url, $modifier = 1)
     {
         $fql = 'SELECT total_count from link_stat where url="' . rawurlencode($url) . '"';
         $json = file_get_contents('http://api.facebook.com/method/fql.query?format=json&query=' . urlencode($fql));
         if (empty($json))
         {
-            return 0;
+            return self::prepare_return(0, $modifier);
         }
         
         $item_data = json_decode($json);  
         if (   !isset($item_data[0])
             || !isset($item_data[0]->total_count))
         {
-            return 0;
+            return self::prepare_return(0, $modifier);
         }
         
-        return $item_data[0]->total_count;
+        return self::prepare_return($item_data[0]->total_count, $modifier);
     }
 
-    public static function hackernews($url)
+    public static function hackernews($url, $modifier = 1)
     {
-        $json = file_get_contents('http://api.ihackernews.com/getid?url=' . urlencode($url));
+        $json = @file_get_contents('http://api.ihackernews.com/getid?url=' . urlencode($url));
         $score = 0;
         if (empty($json))
         {
-            return $score;
+            return self::prepare_return($score, $modifier);
         }
         
         $post_ids = json_decode($json);
         if (   empty($post_ids)
             || !is_array($post_ids))
         {
-            return $score;
+            return self::prepare_return($score, $modifier);
         }
         
         foreach ($post_ids as $post_id)
@@ -90,7 +95,41 @@ class com_meego_planet_calculate
             }
         }
         
-        return $score;
+        return self::prepare_return($score, $modifier);
     }
+    
+    public function age(DateTime $published, $penalty = 0.1)
+    {
+        $article_age = round((time() - $published->getTimestamp()) / 3600);
+        return self::prepare_return(-$article_age, $penalty);
+    }
+    
+    public static function all($url)
+    {
+        $services = array
+        (
+            'facebook' => 0.5,
+            'delicious' => 0.5,
+            'twitter' => 0.6,
+            'hackernews' => 0.7,
+        );
 
+        return (float) array_reduce
+        (
+            array_map
+            (
+                function ($service, $modifier) use ($url)
+                {
+                    return call_user_func(__CLASS__ . "::{$service}", $url, $modifier);
+                },
+                array_keys($services),
+                $services
+            ),
+            function ($x, $y)
+            {
+                return $x + $y;
+            },
+            0.0
+        );
+    }
 }
