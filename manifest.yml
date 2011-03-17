@@ -12,12 +12,26 @@ routes:
         action: items
         template_aliases: 
             content: cmp-show-latest
+    index_rss:
+        path: /items.xml
+        controller: com_meego_planet_controllers_top
+        action: feed
+        template_aliases:
+            root: cmp-show-rss
+        mimetype: application/rss+xml
     latest:
         path: /latest
         controller: com_meego_planet_controllers_latest
         action: items
         template_aliases: 
             content: cmp-show-latest
+    latest_rss:
+        path: /latest/rss.xml
+        controller: com_meego_planet_controllers_latest
+        action: feed
+        template_aliases:
+            root: cmp-show-rss
+        mimetype: application/rss+xml
     latest_page:
         path: /latest/{$int:page}
         controller: com_meego_planet_controllers_latest
