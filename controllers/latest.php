@@ -14,9 +14,9 @@ class com_meego_planet_controllers_latest
         // Query for latest items
         $q = new midgard_query_select
         (
-            new midgard_query_storage('com_meego_planet_item')
+            new midgard_query_storage('com_meego_planet_item_with_author')
         );
-        $q->add_order(new midgard_query_property('metadata.published'), SORT_DESC);
+        $q->add_order(new midgard_query_property('published'), SORT_DESC);
         
         // Handle paging
         $this->check_page($args, $q);

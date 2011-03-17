@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+    <view name="com_meego_planet_item_with_author" table="com_meego_planet_item">
+        <!-- Properties from item -->
+        <property name="id" use="com_meego_planet_item_with_score:id" />
+        <property name="guid" use="com_meego_planet_item_with_score:guid" />
+        <property name="url" use="com_meego_planet_item_with_score:url" />
+        <property name="title" use="com_meego_planet_item_with_score:title" />
+        <property name="content" use="com_meego_planet_item_with_score:content" />
+        <property name="published" use="com_meego_planet_item_with_score:metadata.published" />
+        <property name="score" use="com_meego_planet_item_with_score:score" />
+        
+        <!-- Properties from person -->
+        <property name="firstname" use="midgard_person:firstname" />
+        <property name="lastname" use="midgard_person:lastname" />
+        
+        <!-- Properties from feed -->
+        <property name="author" use="com_meego_planet_feed:author" />
+        <!-- Commented out until https://github.com/midgardproject/midgard-core/issues/89 is fixed
+        <property name="feedid" use="com_meego_planet_feed:id" />
+        <property name="feedtitle" use="com_meego_planet_feed:title" />
+        <property name="feedurl" use="com_meego_planet_feed:url" />-->
+        
+        <!-- Every item needs to have a corresponding feed, so use INNER JOIN -->
+        <join type="inner" class="com_meego_planet_feed">
+            <condition left="com_meego_planet_item_with_score:feed" right="com_meego_planet_feed:id" />
+        </join>
+        <join type="inner" class="midgard_person">
+            <condition left="com_meego_planet_feed:author" right="midgard_person:id" />
+        </join>
+    </view>
+</Schema>

@@ -54,11 +54,7 @@
         </property>
     </type>
     
-    <type name="com_meego_planet_item_score" table="com_meego_planet_item_score" parent="com_meego_planet_item">
-        <property name="id" type="unsigned integer" primaryfield="id">
-            <description>Local non-replication-safe database identifier</description>
-        </property>
-        <property name="item" type="unsigned integer" link="com_meego_planet_item:id" parentfield="item" />
+    <type name="com_meego_planet_item_with_score" extends="com_meego_planet_item">
         <property name="score" type="float" />
     </type>
 </Schema>

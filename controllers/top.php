@@ -14,9 +14,9 @@ class com_meego_planet_controllers_top
         // FIXME: Query for top items instead
         $q = new midgard_query_select
         (
-            new midgard_query_storage('com_meego_planet_item')
+            new midgard_query_storage('com_meego_planet_item_with_author')
         );
-        $q->add_order(new midgard_query_property('metadata.score'), SORT_DESC);
+        $q->add_order(new midgard_query_property('score'), SORT_DESC);
 
         $q->execute();
         
