@@ -8,7 +8,7 @@ class com_meego_planet_controllers_latest
 
     public function get_items(array $args)
     {
-        $this->data['title'] = 'Latest blogs';
+        $this->data['title'] = 'Planet MeeGo: Latest blogs';
         
         // Query for latest items
         $q = new midgard_query_select
