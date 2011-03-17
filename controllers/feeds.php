@@ -1,6 +1,56 @@
 <?php
 class com_meego_planet_controllers_feeds extends midgardmvc_core_controllers_baseclasses_crud
 {
+    public function get_list(array $args)
+    {
+        $this->data['title'] = 'MeeGo Planet: Aggregated Feeds';
+        midgardmvc_core::get_instance()->head->set_title($this->data['title']);
+        
+        $q = new midgard_query_select
+        (
+            new midgard_query_storage('com_meego_planet_feed')
+        );
+        $q->execute();
+        $request = $this->request;
+        $this->data['feeds'] = array_map
+        (
+            function($feed) use ($request)
+            {
+                $feed->editurl = '';
+                $feed->deleteurl = '';
+                if (   midgardmvc_core::get_instance()->authentication->is_user()
+                    && midgardmvc_core::get_instance()->authentication->get_user()->is_admin())
+                {
+                    $feed->editurl = midgardmvc_core::get_instance()->dispatcher->generate_url
+                    (
+                        'feed_update', array
+                        (
+                            'feed' => $feed->guid
+                        ),
+                        $request
+                    );
+                    $feed->deleteurl = midgardmvc_core::get_instance()->dispatcher->generate_url
+                    (
+                        'feed_delete', array
+                        (
+                            'feed' => $feed->guid
+                        ),
+                        $request
+                    );
+                }
+                return $feed;
+            },
+            $q->list_objects()
+        );
+        
+        $this->data['addurl'] = '';
+        if (   midgardmvc_core::get_instance()->authentication->is_user()
+            && midgardmvc_core::get_instance()->authentication->get_user()->is_admin())
+        {
+            $this->data['addurl'] = midgardmvc_core::get_instance()->dispatcher->generate_url('feed_create', array(), $this->request);
+        }
+    } 
+
     public function load_object(array $args)
     {
         $this->object = new com_meego_planet_feed($args['feed']);
