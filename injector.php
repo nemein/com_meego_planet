@@ -1,6 +1,34 @@
 <?php
 class com_meego_planet_injector
 {
+    public function inject_process(midgardmvc_core_request $request)
+    {
+        static $connected = false;
+        if ($connected)
+        {
+            return;
+        }
+        
+        // Subscribe to content changed signals from Midgard
+        midgard_object_class::connect_default
+        (
+            'com_meego_planet_feed',
+            'action-delete-hook',
+            function($feed)
+            {
+                array_walk
+                (
+                    com_meego_planet_utils::get_items_for_feed($feed),
+                    function ($item)
+                    {
+                        $item->delete();
+                    }
+                );
+            }
+        );
+        $connected = true;
+    }
+
     /**
      * Add our own stuff to the templates
      */

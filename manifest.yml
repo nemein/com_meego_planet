@@ -4,6 +4,7 @@ requires:
 requires_pear:
     Feed:
         channel: components.ez.no
+process_injector: com_meego_planet_injector
 template_injector: com_meego_planet_injector
 routes:
     index:

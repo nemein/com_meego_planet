@@ -17,6 +17,26 @@ class com_meego_planet_utils
         return $q->list_objects();
     }
     
+    public static function get_items_for_feed(com_meego_planet_feed $feed)
+    {
+        return com_meego_planet_utils::get_items
+        (
+            function($q) use ($feed)
+            {
+                $q->set_constraint
+                (
+                    new midgard_query_constraint
+                    (
+                        new midgard_query_property('feed'),
+                        '=',
+                        new midgard_query_value($feed->id)
+                    )
+                );
+            },
+            'com_meego_planet_item'
+        );
+    }
+    
     public static function page_by_args(midgard_query_select $q, array $args)
     {
     }

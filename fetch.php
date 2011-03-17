@@ -42,22 +42,7 @@ class com_meego_planet_fetch
         );
         array_walk
         (
-            com_meego_planet_utils::get_items
-            (
-                function($q) use ($feed)
-                {
-                    $q->set_constraint
-                    (
-                        new midgard_query_constraint
-                        (
-                            new midgard_query_property('feed'),
-                            '=',
-                            new midgard_query_value($feed->id)
-                        )
-                    );
-                },
-                'com_meego_planet_item'
-            ),
+            com_meego_planet_utils::get_items_for_feed($feed),
             function ($item) use ($urls)
             {
                 if (!in_array($item->url, $urls))
