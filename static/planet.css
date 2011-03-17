@@ -2,10 +2,14 @@ ol.news {
     padding-left: 0px;
     margin-left: 0px;
 }
-ol.news li {
+ol.news > li {
     list-style: none;
     padding-left: 0px;
     margin-left: 0px;
+    border-bottom: 1px solid #cccccc;
+}
+ol.news h2 a {
+    border-bottom: none;
 }
 
 /* Main content area */
