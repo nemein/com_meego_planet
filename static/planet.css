@@ -8,6 +8,9 @@ ol.news > li {
     margin-left: 0px;
     border-bottom: 1px solid #cccccc;
 }
+ol.news > li:last-child {
+    border-bottom: none;
+}
 ol.news h2 a {
     border-bottom: none;
 }
