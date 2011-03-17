@@ -43,3 +43,7 @@ This command updates the Social Web scores of items. Run it couple of times per 
     php -c php.ini com_meego_planet/bin/update_age.php
 
 This command updates age calculations for all posts. Run it as often as is fit for your environment. For example every half hour.
+
+## Background
+
+This is a Midgard MVC port of [org.maemo.socialnews](http://trac.midgard-project.org/browser/branches/ragnaroek/midcom/org.maemo.socialnews), the Social News aggregator developed for [Maemo News](http://maemo.org/news/). This new version has been developed initially for [Planet MeeGo](http://wiki.meego.com/Web_infrastructure/Planet.meego.com).
