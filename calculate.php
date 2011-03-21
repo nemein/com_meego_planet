@@ -115,7 +115,7 @@ class com_meego_planet_calculate
         
         foreach ($item_data->data->counts->$url as $counts)
         {
-            return self::prepare_return(count($counts->count), $modifier);
+            return self::prepare_return($counts->count, $modifier);
         }
     }
     
