@@ -15,6 +15,10 @@ ol.news h2 a {
     border-bottom: none;
 }
 
+.twtr-widget a {
+    border-bottom: none;
+}
+
 /* Main content area */
 #drupal_content .section{
     margin-right:10px;
