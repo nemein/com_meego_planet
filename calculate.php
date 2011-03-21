@@ -97,6 +97,27 @@ class com_meego_planet_calculate
         
         return self::prepare_return($score, $modifier);
     }
+
+    public static function buzz($url, $modifier = 1)
+    {
+        $json = @file_get_contents('https://www.googleapis.com/buzz/v1/activities/count?alt=json&url=' . urlencode($url));
+        if (empty($json))
+        {
+            return self::prepare_return(0, $modifier);
+        }
+        
+        $item_data = json_decode($json);
+        if (   !isset($item_data->data)
+            || !isset($item_data->data->counts->$url))
+        {
+            return self::prepare_return(0, $modifier);
+        }
+        
+        foreach ($item_data->data->counts->$url as $counts)
+        {
+            return self::prepare_return(count($counts->count), $modifier);
+        }
+    }
     
     public function age(DateTime $published, $penalty = 0.1)
     {
@@ -112,6 +133,7 @@ class com_meego_planet_calculate
             'delicious' => 0.5,
             'twitter' => 0.6,
             'hackernews' => 0.7,
+            'buzz' => 0.6,
         );
 
         return (float) array_reduce

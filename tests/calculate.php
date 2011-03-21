@@ -59,6 +59,15 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
         $this->assertGreaterThanOrEqual(100, $score);
     }
     
+    public function test_buzz()
+    {
+        $this->assert_urls('com_meego_planet_calculate::buzz');
+
+        // Test also with an URL we know has been posted
+        $score = com_meego_planet_calculate::hackernews('http://bergie.iki.fi/blog/introducing_the_midgard_create_user_interface/');
+        $this->assertGreaterThanOrEqual(100, $score);
+    }
+    
     public function test_age()
     {
         $penalty = com_meego_planet_calculate::age(new DateTime(), 1);
