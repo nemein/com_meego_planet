@@ -82,10 +82,6 @@ jQuery(document).ready(function() {
         };
         voted[subject].for = replaceVoteWithRadio(subject, 'votesFor', jQuery('[property="mgd\\:votesFor"]', this));
         voted[subject].against = replaceVoteWithRadio(subject, 'votesAgainst', jQuery('[property="mgd\\:votesAgainst"]', this));
-        
-        jQuery('[property="mgd\\:userVote"]', this).each(function() {
-            jQuery(this).hide();
-        });
     });
     
     if (window.location.hash &&
