@@ -1,4 +1,4 @@
 <?php
 $data = midgardmvc_core::get_instance()->context->get_item('current_component');
-echo $data['feed']->generate('rss2');
+echo @$data['feed']->generate('rss2');
 ?>
