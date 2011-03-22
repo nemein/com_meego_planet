@@ -18,6 +18,14 @@ ol.news .planetoverflow {
     display: none !important;
 }
 
+ol.news .avatar {
+    float: right;
+    background-color: #c0c0c0;
+    height: 100px;
+    width: 100px;
+    margin-left: 1em;
+}
+
 ol.news .votes {
     text-align: right;
     margin-bottom: 0.5em;

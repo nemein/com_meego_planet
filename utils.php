@@ -101,7 +101,18 @@ class com_meego_planet_utils
     
     public static function prepare_item_for_display($item)
     {
-        // TODO: Add avatar
+        static $authors = array();
+        if (isset($authors[$item->author]))
+        {
+            $item->authoruser = $authors[$item->author];
+            return $item;
+        }
+        /*
+        TODO: Query matching user so we get the username
+        $person = new midgard_person($item->author);
+        $authors[$item->author] = $person;
+        $item->authoruser = $authors[$item->author];
+        */
         return $item;
     }
 }
