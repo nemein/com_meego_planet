@@ -13,7 +13,7 @@ jQuery(document).ready(function() {
     }
     
     var sendVote = function(subject, voteType) {
-        var url = '/votes/' + encodeURIComponent(subject) + '/vote/';
+        var url = '/votes/' + encodeURIComponent(subject) + '/';
         var data = {};
         switch (voteType) {
             case 'votesFor':

@@ -118,32 +118,6 @@ class com_meego_planet_calculate
             return self::prepare_return($counts->count, $modifier);
         }
     }
-    
-    private static function load_item_by_url($url)
-    {
-        $q = new midgard_query_select
-        (
-            new midgard_query_storage('com_meego_planet_item_vote')
-        );
-        $q->set_constraint
-        (
-            new midgard_query_constraint
-            (
-                new midgard_query_property('url'),
-                '=',
-                new midgard_query_value($url)
-            )
-        );
-        
-        $q->execute();
-        if ($q->resultscount == 0)
-        {
-            return null;
-        }
-        
-        $objects = $q->list_objects();
-        return $objects[0];
-    }
 
     public static function votes_for($url, $modifier = 1)
     {
@@ -152,13 +126,16 @@ class com_meego_planet_calculate
             return self::prepare_return(0, $modifier);
         }
         
-        $item = self::load_item_by_url($url);
-        if (!$item)
+        try
+        {
+            $item = com_meego_planet_utils::get_item($url);
+        }
+        catch (Exception $e)
         {
             return self::prepare_return(0, $modifier);
         }
 
-        $votes = com_meego_planet::get($item);
+        $votes = com_meego_planet_votes::get($item);
         return self::prepare_return($votes['1'], $modifier);
     }
 
@@ -169,13 +146,16 @@ class com_meego_planet_calculate
             return self::prepare_return(0, $modifier);
         }
         
-        $item = self::load_item_by_url($url);
-        if (!$item)
+        try
+        {
+            $item = com_meego_planet_utils::get_item($url);
+        }
+        catch (Exception $e)
         {
             return self::prepare_return(0, $modifier);
         }
 
-        $votes = com_meego_planet::get($item);
+        $votes = com_meego_planet_votes::get($item);
         return self::prepare_return($votes['-1'], $modifier);
     }
     

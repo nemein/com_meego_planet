@@ -1,6 +1,8 @@
 <?php
 class com_meego_planet_controllers_vote
 {
+    private $item = null;
+
     public function __construct(midgardmvc_core_request $request)
     {
         $this->request = $request;
@@ -10,37 +12,22 @@ class com_meego_planet_controllers_vote
     {
         midgardmvc_core::get_instance()->authorization->require_user();
 
-        if (!isset($_POST['vote']))
-        {
-            throw new midgardmvc_exception_notfound("You did not specify your vote");
-        }
-        $item = $this->load_item($args);
+        // GET will handle loading the item
+        $this->get_item($args);
    
         $vote_obj = com_meego_planet_votes::vote
         (
-            $item,
+            $this->item,
             (int) $_POST['vote']
         );
 
-        $this->data['votes'] = com_meego_planet_votes::get($item);
+        // Refresh votes before sending
+        $this->data['votes'] = com_meego_planet_votes::get($this->item);
     }
     
-    public function get_votes(array $args)
+    public function get_item(array $args)
     {
-        $item = $this->load_item($args);
-        $this->data['votes'] = com_meego_planet_votes::get($item);
-    }
-
-    private function load_item(array $args)
-    {
-        try
-        {
-            $item = new com_meego_planet_item($args['item']);
-        }
-        catch (midgard_error_exception $e)
-        {
-            throw new midgardmvc_exception_notfound($e->getMessage());
-        }
-        return $item;
+        $this->item = com_meego_planet_utils::get_item($args['item']);
+        $this->data['votes'] = com_meego_planet_votes::get($this->item);
     }
 }

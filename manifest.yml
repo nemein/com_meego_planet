@@ -42,14 +42,6 @@ routes:
     item_votes:
         path: /votes/{$guid:item}
         controller: com_meego_planet_controllers_vote
-        action: votes
-        mimetype: application/json
-        template_aliases: 
-            root: midgardmvc-show-json
-
-    item_vote:
-        path: /votes/{$guid:item}/vote
-        controller: com_meego_planet_controllers_vote
         action: item
         mimetype: application/json
         template_aliases: 
