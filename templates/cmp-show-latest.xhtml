@@ -2,9 +2,10 @@
 
 <ol tal:condition="com_meego_planet/items" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" class="news">
     <li tal:repeat="item com_meego_planet/items" tal:attributes="about item/url" typeof="sioc:Post">
-        <div class="avatar">
-            Avatar
-        </div>
+        <a class="avatar" tal:condition="item/avatar" tal:attributes="href item/avatarurl">
+            <img tal:attributes="src item/avatar" />
+            <span tal:content="item/firstname">Author</span>
+        </a>
         <h2>
             <a tal:content="item/title" tal:attributes="href item/url" property="dcterms:title">Blog post</a>
         </h2>

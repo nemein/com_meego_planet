@@ -24,11 +24,12 @@ ol.news .metadata {
 
 ol.news .avatar {
     float: right;
-    background-color: #c0c0c0;
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 60px;
     margin-left: 1em;
     text-align: center;
+    font-size: smaller;
+    border: none;
 }
 
 ol.news .votes {

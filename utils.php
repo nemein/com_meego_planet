@@ -99,20 +99,39 @@ class com_meego_planet_utils
     {
     }
     
-    public static function prepare_item_for_display($item)
+    private static function get_user_by_author($author)
     {
         static $authors = array();
-        if (isset($authors[$item->author]))
+        if (isset($authors[$author]))
         {
-            $item->authoruser = $authors[$item->author];
-            return $item;
+            return $authors[$author];
         }
-        /*
-        TODO: Query matching user so we get the username
-        $person = new midgard_person($item->author);
-        $authors[$item->author] = $person;
-        $item->authoruser = $authors[$item->author];
-        */
+        
+        // Query matching user so we get the username
+        $person = new midgard_person($author);
+        $qb = new midgard_query_builder('midgard_user');
+        $qb->add_constraint('personguid', '=', $person->guid);
+        $users = $qb->execute();
+        if (count($users) == 0)
+        {
+            return null;
+        }
+        
+        $authors[$author] = $users[0]->login;
+        return $authors[$author];
+    }
+    
+    public static function prepare_item_for_display($item)
+    {
+        $username = self::get_user_by_author($item->author);
+        $item->avatar = '';
+        $item->avatarurl = '';
+        if ($username)
+        {
+            $item->avatar = midgardmvc_core::get_instance()->dispatcher->generate_url('meego_avatar', array('username' => $username), '/');
+            $item->avatarurl = "http://meego.com/users/{$username}";
+        }
+        
         return $item;
     }
 }
