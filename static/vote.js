@@ -84,10 +84,14 @@ jQuery(document).ready(function() {
         voted[subject].against = replaceVoteWithRadio(subject, 'votesAgainst', jQuery('[property="mgd\\:votesAgainst"]', this));
     });
     
+    // Handle votes after a login redirect
     if (window.location.hash &&
         window.location.hash.indexOf('/') !== -1) {
         var components = window.location.hash.split('/');
         sendVote(components[0].replace('#', ''), components[1]);
         window.location.hash = '';
     }
+
+    // Buttonize feed list management
+    jQuery('.feeds .button').button();
 });

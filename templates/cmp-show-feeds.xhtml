@@ -1,15 +1,16 @@
 <h1 tal:content="com_meego_planet/title">Feeds</h1>
 
-<ul tal:condition="com_meego_planet/feeds" class="feeds">
-    <li tal:repeat="feed com_meego_planet/feeds">
-        <a tal:attributes="href feed/feed"><img src="/midgardmvc-static/com_meego_planet/feed-icon-14x14.png" alt="Feed" /></a>
-        <a tal:content="feed/title" tal:attributes="href feed/url">My feed</a>
-        
-        <a class="button" tal:condition="feed/editurl" tal:attributes="href feed/editurl">Edit</a>
-        <a class="button" tal:condition="feed/deleteurl" tal:attributes="href feed/deleteurl">Delete</a>
-    </li>
-</ul>
-
-<p tal:condition="com_meego_planet/addurl">
+<p tal:condition="com_meego_planet/addurl" class="feeds">
     <a class="button" tal:attributes="href com_meego_planet/addurl">Add a blog</a>
 </p>
+
+<ul tal:condition="com_meego_planet/feeds" class="feeds">
+    <li tal:repeat="feed com_meego_planet/feeds">
+        <a tal:attributes="href feed/feed" class="feed"><img src="/midgardmvc-static/com_meego_planet/feed-icon-14x14.png" alt="Feed" /></a>
+        <a tal:content="feed/title" tal:attributes="href feed/url">My feed</a>
+        <div class="buttons">
+            <a class="button" tal:condition="feed/editurl" tal:attributes="href feed/editurl">Edit</a>
+            <a class="button" tal:condition="feed/deleteurl" tal:attributes="href feed/deleteurl">Delete</a>
+        </div>
+    </li>
+</ul>

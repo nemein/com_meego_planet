@@ -20,8 +20,34 @@ ol.news .votes {
     margin-bottom: 0.5em;
 }
 
-ol.news .votes .ui-button-icon-only .ui-button-text {
+ol.news .votes .ui-button-icon-only .ui-button-text,
+ul.feeds .button .ui-button-text {
     padding: .1em;
+}
+
+ul.feeds {
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+ul.feeds li {
+    margin-bottom: 0.5em;
+    position: relative;
+    padding-left: 0px;
+    margin-left: 0px;
+    list-style: none;
+}
+
+ul.feeds li .buttons {
+    position: absolute;
+    top: 0px;
+    left: 300px;
+}
+
+ul.feeds li .feed,
+.feeds .button {
+    border-bottom: none;
+    vertical-align: middle;
 }
 
 .twtr-widget a {
