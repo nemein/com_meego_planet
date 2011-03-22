@@ -35,6 +35,9 @@ class com_meego_planet_controllers_top
                 'href' => midgardmvc_core::get_instance()->dispatcher->generate_url('index_rss', array(), $this->request)
             )
         );
+        midgardmvc_core::get_instance()->head->enable_jquery();
+        midgardmvc_core::get_instance()->head->enable_jquery_ui();
+        midgardmvc_core::get_instance()->head->add_jsfile(MIDGARDMVC_STATIC_URL . '/com_meego_planet/vote.js');
     }
     
     public function get_feed(array $args)

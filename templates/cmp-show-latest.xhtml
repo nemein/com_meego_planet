@@ -1,15 +1,21 @@
 <h1 tal:content="com_meego_planet/title">Latest news</h1>
 
-<ol tal:condition="com_meego_planet/items" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:dcterms="http://purl.org/dc/terms/" class="news">
+<ol tal:condition="com_meego_planet/items" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" class="news">
     <li tal:repeat="item com_meego_planet/items" tal:attributes="about item/url" typeof="sioc:Post">
         <h2>
             <a tal:content="item/title" tal:attributes="href item/url" property="dcterms:title">Blog post</a>
         </h2>
         <div class="metadata">
             <span property="dcterms:created" tal:content="php: item.published.format('Y-m-d H:i T')">1999-05-07 02:05 UTC</span>
+            <span property="rdfs:seeAlso" tal:attributes="content string:urn:uuid:${item/guid}" />
         </div>
         <div tal:content="structure item/content" property="sioc:content">
             Lorem ipsum
+        </div>
+        <div class="votes" tal:define="voting php:midgardmvc.templating.dynamic_call('com_meego_planet', 'item_votes', array('item' => item.guid))">
+            <span property="mgd:votesFor" tal:content="voting/votes/1">5</span>
+            <span property="mgd:votesAgainst" tal:content="voting/votes/-1">5</span>
+            <span tal:condition="php:midgardmvc.authentication.is_user()" property="mgd:user-vote" tal:content="voting/votes/user">0</span>
         </div>
     </li>
 </ol>

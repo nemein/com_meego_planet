@@ -58,4 +58,13 @@
         <property name="score" type="float" />
         <property name="agedscore" type="float" />
     </type>
+
+    <type name="com_meego_planet_item_vote" table="com_meego_planet_item_vote" parent="com_meego_planet_item">
+        <property name="id" type="unsigned integer" primaryfield="id">
+            <description>Local non-replication-safe database identifier</description>
+        </property>
+        <property name="item" type="unsigned integer" link="com_meego_planet_item:id" parentfield="item" />
+        <property name="user" type="unsigned integer" link="midgard_person:id" />
+        <property name="vote" type="integer" />
+    </type>
 </Schema>

@@ -15,6 +15,15 @@ ol.news h2 a {
     border-bottom: none;
 }
 
+ol.news .votes {
+    text-align: right;
+    margin-bottom: 0.5em;
+}
+
+ol.news .votes .ui-button-icon-only .ui-button-text {
+    padding: .1em;
+}
+
 .twtr-widget a {
     border-bottom: none;
 }
