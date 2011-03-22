@@ -45,6 +45,15 @@ class com_meego_planet_votes
         (
             new midgard_query_storage('com_meego_planet_item_vote')
         );
+        $q->set_constraint
+        (
+            new midgard_query_constraint
+            (
+                new midgard_query_property('item'),
+                '=',
+                new midgard_query_value($item->id)
+            )
+        );
         $q->execute();
         $vote_objs = $q->list_objects();
 
@@ -76,6 +85,11 @@ class com_meego_planet_votes
             0
         );
         
+        if (midgardmvc_core::get_instance()->authentication->is_user())
+        {
+            $votes['user'] = self::get_user_vote($item)->vote;
+        }
+        
         return $votes;
     }
 
@@ -87,7 +101,9 @@ class com_meego_planet_votes
         (
             new midgard_query_storage('com_meego_planet_item_vote')
         );
-        $q->set_constraint
+        
+        $qc = new midgard_query_constraint_group('AND');
+        $qc->add_constraint
         (
             new midgard_query_constraint
             (
@@ -96,7 +112,7 @@ class com_meego_planet_votes
                 new midgard_query_value($item->id)
             )
         );
-        $q->set_constraint
+        $qc->add_constraint
         (
             new midgard_query_constraint
             (
@@ -105,6 +121,7 @@ class com_meego_planet_votes
                 new midgard_query_value(midgardmvc_core::get_instance()->authentication->get_person()->id)
             )
         );
+        $q->set_constraint($qc);
         $q->execute();
         $objects = $q->list_objects();
         if (count($objects) > 0)

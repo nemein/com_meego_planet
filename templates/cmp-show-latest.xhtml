@@ -15,7 +15,7 @@
         <div class="votes" tal:define="voting php:midgardmvc.templating.dynamic_call('com_meego_planet', 'item_votes', array('item' => item.guid))">
             <span property="mgd:votesFor" tal:content="voting/votes/1">5</span>
             <span property="mgd:votesAgainst" tal:content="voting/votes/-1">5</span>
-            <span tal:condition="php:midgardmvc.authentication.is_user()" property="mgd:user-vote" tal:content="voting/votes/user">0</span>
+            <span tal:condition="php:midgardmvc.authentication.is_user()" property="mgd:userVote" tal:content="voting/votes/user">0</span>
         </div>
     </li>
 </ol>

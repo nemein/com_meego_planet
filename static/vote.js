@@ -13,7 +13,6 @@ jQuery(document).ready(function() {
     }
     
     var sendVote = function(subject, voteType) {
-        console.log("Voting for...", subject, voteType);
         var url = '/votes/' + encodeURIComponent(subject) + '/vote/';
         var data = {};
         switch (voteType) {
@@ -30,11 +29,12 @@ jQuery(document).ready(function() {
             type: 'POST',
             data: data,
             success: function(updatedVotes) {
-                console.log('OK', subject, updatedVotes);
+                jQuery('[about="' + voted[subject].uri + '"]').find('[property="mgd\\:votesFor"]').text(updatedVotes.votes['1']);
+                jQuery('[about="' + voted[subject].uri + '"]').find('[property="mgd\\:votesAgainst"]').text(updatedVotes.votes['-1']);
             },
             error: function(req) {
                 if (req.status === 401) {
-                    // User is not logged in
+                    // User is not logged in, relocate to login form
                     window.location = '/mgd:login?redirect=' + encodeURIComponent(window.location + '#' + subject + '/' + voteType);
                 }
             }
@@ -43,12 +43,22 @@ jQuery(document).ready(function() {
     
     var replaceVoteWithRadio = function(subject, type, element) {
         var elementId, widget;
-        voted[subject][type] = jQuery(element).text();
         
         elementId = subject + type;
         widget = jQuery('<input name="' + subject + '" id="' + elementId + '" type="radio" />');
         jQuery(element).before(widget);
         widget.after(jQuery('<label for="' + elementId + '">' + type + '</label>'));
+        
+        jQuery('[property="mgd\\:userVote"]', widget.parent()).each(function() {
+            if (type === "votesFor" &&
+                jQuery(this).text() === "1") {
+                widget.attr('checked', 'checked');   
+            }
+            if (type === "votesAgainst" &&
+                jQuery(this).text() === "-1") {
+                widget.attr('checked', 'checked');   
+            }
+        });
         
         widget.button({
             icons: {
@@ -61,16 +71,22 @@ jQuery(document).ready(function() {
             sendVote(subject, type);
         });
         
-        return elementId;
+        return jQuery(element).text();
     }
 
     jQuery('[about][typeof="sioc:Post"]').each(function() {
-        var subject = jQuery('[property="rdfs\\:seeAlso"]', this).attr('content').replace('urn:uuid:', '');
-        voted[subject] = {};
-        replaceVoteWithRadio(subject, 'votesFor', jQuery('[property="mgd\\:votesFor"]', this));
-        replaceVoteWithRadio(subject, 'votesAgainst', jQuery('[property="mgd\\:votesAgainst"]', this));
+        var subject, votesForId, votesAgainstId;
+        subject = jQuery('[property="rdfs\\:seeAlso"]', this).attr('content').replace('urn:uuid:', '');
+        voted[subject] = {
+            uri: jQuery(this).attr('about')
+        };
+        voted[subject].for = replaceVoteWithRadio(subject, 'votesFor', jQuery('[property="mgd\\:votesFor"]', this));
+        voted[subject].against = replaceVoteWithRadio(subject, 'votesAgainst', jQuery('[property="mgd\\:votesAgainst"]', this));
+        
+        jQuery('[property="mgd\\:userVote"]', this).each(function() {
+            jQuery(this).hide();
+        });
     });
-    console.log(voted);
     
     if (window.location.hash &&
         window.location.hash.indexOf('/') !== -1) {
