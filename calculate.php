@@ -159,6 +159,29 @@ class com_meego_planet_calculate
         return self::prepare_return($votes['-1'], $modifier);
     }
     
+    public static function reddit($url, $modifier = 1)
+    {
+        $json = @file_get_contents('http://www.reddit.com/api/info.json?url='.urlencode($url));
+
+        if (empty($json))
+        {
+            return self::prepare_return(0, $modifier);
+        }
+        $item_data = json_decode($json);
+        if (!isset($item_data->data))
+        {
+            return self::prepare_return(0, $modifier);
+        }
+
+        $sum = 0;
+        foreach ($item_data->data->children as $record) {
+            $sum += $record->data->score;
+            $sum += $record->data->num_comments;
+        }
+
+        return self::prepare_return($sum, $modifier);
+    }
+
     public function age(DateTime $published, $penalty = 0.1)
     {
         $article_age = round((time() - $published->getTimestamp()) / 3600);
