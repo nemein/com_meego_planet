@@ -25,7 +25,7 @@ array_walk
     {
         $score = $item->score;
         $score += com_meego_planet_calculate::age($item->metadata->published);
-        if ($item->agedscore != $score)
+        if (round($item->agedscore, 2) != round($score, 2))
         {
             // FIXME: This is here until we can get QuerySelect out of read-only state
             $item = new com_meego_planet_item_with_score($item->guid);
