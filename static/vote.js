@@ -91,7 +91,4 @@ jQuery(document).ready(function() {
         sendVote(components[0].replace('#', ''), components[1]);
         window.location.hash = '';
     }
-
-    // Buttonize feed list management
-    jQuery('.feeds .button').button();
 });
