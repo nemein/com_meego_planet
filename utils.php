@@ -30,6 +30,11 @@ class com_meego_planet_utils
 
     private static function get_item_by_url($url)
     {
+        if (!filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED))
+        {
+            throw new InvalidArgumentException("Argument must be a valid URL");
+        }
+        
         $q = new midgard_query_select
         (
             new midgard_query_storage('com_meego_planet_item')
