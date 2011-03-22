@@ -1,10 +1,11 @@
 jQuery(document).ready(function() {
     var captionize = function(element) {
+        var textElement = element.clone();
         var newLinize = ['<br />', '</p>', '</div>', '</h1>', '</h2>', '</h3>'];
         jQuery.each(newLinize, function(tag) {
-            element.html(element.html().replace(tag, "\n" + tag));
+            textElement.html(textElement.html().replace(tag, "\n" + tag));
         });
-        return element.text().substring(0, 400);
+        return textElement.text().substring(0, 400);
     }
 
     var allowedLength = 1000;
