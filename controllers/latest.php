@@ -40,6 +40,7 @@ class com_meego_planet_controllers_latest
         midgardmvc_core::get_instance()->head->enable_jquery();
         midgardmvc_core::get_instance()->head->enable_jquery_ui();
         midgardmvc_core::get_instance()->head->add_jsfile(MIDGARDMVC_STATIC_URL . '/com_meego_planet/vote.js');
+        midgardmvc_core::get_instance()->head->add_jsfile(MIDGARDMVC_STATIC_URL . '/com_meego_planet/shorten.js');
     }
     
     public function get_feed(array $args)

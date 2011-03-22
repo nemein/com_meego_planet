@@ -49,7 +49,7 @@ jQuery(document).ready(function() {
             postElement.prepend(plaintextElement);
         }
         
-        var showButton = jQuery('<button>Show more</button>').button();
+        var showButton = jQuery('<button>Read more</button>').button();
         showButton.click(function() {
             jQuery('.planetoverflow', postElement).removeClass('planetoverflow');
             jQuery('.planetoverflowcaption', postElement).remove();
