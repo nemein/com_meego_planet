@@ -8,7 +8,7 @@ class com_meego_planet_controllers_latest
 
     public function get_items(array $args)
     {
-        $this->data['title'] = 'Planet MeeGo: Latest blogs';
+        $this->data['title'] = sprintf('%s: Latest posts', $node = $this->request->get_node()->get_object()->title);
         midgardmvc_core::get_instance()->head->set_title($this->data['title']);
         
         $this->data['items'] = array_map

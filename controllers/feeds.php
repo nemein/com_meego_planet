@@ -3,7 +3,7 @@ class com_meego_planet_controllers_feeds extends midgardmvc_core_controllers_bas
 {
     public function get_list(array $args)
     {
-        $this->data['title'] = 'MeeGo Planet: Aggregated Feeds';
+        $this->data['title'] = sprintf('%s: Aggregated feeds', $node = $this->request->get_node()->get_object()->title);
         midgardmvc_core::get_instance()->head->set_title($this->data['title']);
         
         $q = new midgard_query_select
