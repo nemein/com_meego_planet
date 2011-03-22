@@ -17,17 +17,29 @@ jQuery(document).ready(function() {
         
         var totalLength = 0;
         var currentLength = 0;
-        postElement.children().each(function() {
-            var elementLength = jQuery(this).text().length;
+        
+        var checkElement = function(element) {
+            var elementLength = jQuery(element).text().length;
             if (totalLength + elementLength > allowedLength)
             {
-                jQuery(this).addClass('planetoverflow');
+                if (element.tagName === 'UL') {
+                    jQuery(element).children().each(function() {
+                        checkElement(this);
+                    });
+                }
+                else {    
+                    jQuery(element).addClass('planetoverflow');
+                }
             }
             else
             {
                 currentLength += elementLength;
             }
             totalLength += elementLength;
+        }
+        
+        postElement.children().each(function() {
+            checkElement(this);
         });
 
         if (currentLength === 0)
