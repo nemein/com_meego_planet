@@ -80,6 +80,16 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
         $this->assertType('float', $penalty);
         $this->assertEquals(-0.25, $penalty);
     }
+
+    public function test_votes_for()
+    {
+        $this->assert_urls('com_meego_planet_calculate::votes_for');
+    }
+
+    public function test_votes_against()
+    {
+        $this->assert_urls('com_meego_planet_calculate::votes_against');
+    }
     
     public function test_all()
     {

@@ -119,6 +119,66 @@ class com_meego_planet_calculate
         }
     }
     
+    private static function load_item_by_url($url)
+    {
+        $q = new midgard_query_select
+        (
+            new midgard_query_storage('com_meego_planet_item_vote')
+        );
+        $q->set_constraint
+        (
+            new midgard_query_constraint
+            (
+                new midgard_query_property('url'),
+                '=',
+                new midgard_query_value($url)
+            )
+        );
+        
+        $q->execute();
+        if ($q->resultscount == 0)
+        {
+            return null;
+        }
+        
+        $objects = $q->list_objects();
+        return $objects[0];
+    }
+
+    public static function votes_for($url, $modifier = 1)
+    {
+        if (!class_exists('midgard_query_select'))
+        {
+            return self::prepare_return(0, $modifier);
+        }
+        
+        $item = self::load_item_by_url($url);
+        if (!$item)
+        {
+            return self::prepare_return(0, $modifier);
+        }
+
+        $votes = com_meego_planet::get($item);
+        return self::prepare_return($votes['1'], $modifier);
+    }
+
+    public static function votes_against($url, $modifier = 1)
+    {
+        if (!class_exists('midgard_query_select'))
+        {
+            return self::prepare_return(0, $modifier);
+        }
+        
+        $item = self::load_item_by_url($url);
+        if (!$item)
+        {
+            return self::prepare_return(0, $modifier);
+        }
+
+        $votes = com_meego_planet::get($item);
+        return self::prepare_return($votes['-1'], $modifier);
+    }
+    
     public function age(DateTime $published, $penalty = 0.1)
     {
         $article_age = round((time() - $published->getTimestamp()) / 3600);
@@ -134,6 +194,8 @@ class com_meego_planet_calculate
             'twitter' => 0.6,
             'hackernews' => 0.7,
             'buzz' => 0.6,
+            'votes_for' => 0.7,
+            'votes_against' => -5,
         );
 
         return (float) array_reduce
