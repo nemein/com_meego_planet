@@ -28,6 +28,7 @@ ol.news .avatar {
     height: 100px;
     width: 100px;
     margin-left: 1em;
+    text-align: center;
 }
 
 ol.news .votes {
