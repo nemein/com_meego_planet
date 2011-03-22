@@ -10,6 +10,7 @@
         </property>
         <property name="url" type="string">
             <description>URL of the blog</description>
+            <contenttype>url</contenttype>
         </property>
         <property name="title" type="string">
             <description>Title of the blog</description>
@@ -19,6 +20,7 @@
         <property name="feed" type="string">
             <description>URL of the blog feed</description>
             <required>true</required>
+            <contenttype>url</contenttype>
         </property>
         <property name="author" type="unsigned integer" link="midgard_person:id">
             <description>Author of the blog</description>
@@ -37,6 +39,7 @@
         </property>
         <property name="url" type="string">
             <description>Permalink URL for the item</description>
+            <contenttype>url</contenttype>
         </property>
         <property name="title" type="string">
             <description>Title of the article</description>
