@@ -52,7 +52,7 @@ class com_meego_planet_controllers_feeds extends midgardmvc_core_controllers_bas
 
         midgardmvc_core::get_instance()->head->enable_jquery();
         midgardmvc_core::get_instance()->head->enable_jquery_ui();
-        midgardmvc_core::get_instance()->head->add_jsfile(MIDGARDMVC_STATIC_URL . '/com_meego_planet/vote.js');
+        midgardmvc_core::get_instance()->head->add_jsfile(MIDGARDMVC_STATIC_URL . '/com_meego_planet/feeds.js');
     } 
 
     public function load_object(array $args)
