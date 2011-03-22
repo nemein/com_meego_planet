@@ -197,6 +197,7 @@ class com_meego_planet_calculate
             'twitter' => 0.6,
             'hackernews' => 0.7,
             'buzz' => 0.6,
+            'reddit' => 0.5,
             'votes_for' => 0.7,
             'votes_against' => -5,
         );
