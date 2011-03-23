@@ -128,8 +128,15 @@ class com_meego_planet_utils
         $item->avatarurl = '';
         if ($username)
         {
-            $item->avatar = midgardmvc_core::get_instance()->dispatcher->generate_url('meego_avatar', array('username' => $username), '/');
-            $item->avatarurl = "http://meego.com/users/{$username}";
+            try
+            {
+                $item->avatar = midgardmvc_core::get_instance()->dispatcher->generate_url('meego_avatar', array('username' => $username), '/');
+                $item->avatarurl = "http://meego.com/users/{$username}";
+            }
+            catch (Exception $e)
+            {
+                midgardmvc_core::get_instance()->context->delete();
+            }
         }
         
         return $item;
