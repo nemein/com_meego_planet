@@ -69,14 +69,26 @@ class com_meego_planet_fetch
             $dirty = true;
         }
 
-        if (self::set_item_value($item, 'content', $feed_item->description->text))
-        {
-            $dirty = true;
+        if (isset($feed_item->description)) {
+            if (self::set_item_value($item, 'content', $feed_item->description->text))
+            {
+                $dirty = true;
+            }
         }
 
-        if (self::set_item_value($item->metadata, 'published', $feed_item->published->date))
+        if (!is_null($feed_item->published))
         {
-            $dirty = true;
+            if (self::set_item_value($item->metadata, 'published', $feed_item->published->date))
+            {
+                $dirty = true;
+            }
+        }
+        elseif (!$item->guid)
+        {
+            if (self::set_item_value($item->metadata, 'published', new DateTime()))
+            {
+                $dirty = true;
+            }
         }
 
         if (!$dirty)
