@@ -109,15 +109,7 @@ class com_meego_planet_utils
         
         // Query matching user so we get the username
         $person = new midgard_person($author);
-        $qb = new midgard_query_builder('midgard_user');
-        $qb->add_constraint('personguid', '=', $person->guid);
-        $users = $qb->execute();
-        if (count($users) == 0)
-        {
-            return null;
-        }
-        
-        $authors[$author] = $users[0]->login;
+        $authors[$author] = $users[0]->firstname;
         return $authors[$author];
     }
     
