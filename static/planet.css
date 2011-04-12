@@ -103,3 +103,24 @@ ul.feeds li .feed,
     padding-left:5px;
     position: relative;
 }
+
+.section form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.section form label input {
+    display: block;
+    width: 100%;
+}
+
+body ul.ui-autocomplete {
+    width: 300px;
+    margin: 0px;
+    padding: 0px;
+}
+
+body ul.ui-autocomplete li {
+    list-style: none;
+}

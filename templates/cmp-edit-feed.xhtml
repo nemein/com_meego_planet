@@ -1,2 +1,18 @@
 <div tal:content="structure com_meego_planet/form">
 </div>
+
+<script>
+var searchArea = jQuery('<input type="text" />');
+var authorId = jQuery('input[name="author"]');
+authorId.hide();
+authorId.after(searchArea);
+searchArea.autocomplete({
+    source: '/people/search/',
+    select: function( event, ui ) {
+        searchArea.val(ui.item.label);
+        authorId.val(ui.item.value);
+        return false;
+    },
+    minLenght: 0
+});
+</script>

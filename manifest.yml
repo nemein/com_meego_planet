@@ -70,3 +70,10 @@ routes:
         action: delete
         template_aliases: 
             content: cmp-delete-feed
+    people_search:
+        path: /people/search
+        controller: com_meego_planet_controllers_people
+        action: search
+        template_aliases:
+            root: midgardmvc-show-json
+        mimetype: application/json
