@@ -97,6 +97,7 @@ class com_meego_planet_utils
     
     public static function page_by_args(midgard_query_select $q, array $args)
     {
+        $q->set_limit(20);
     }
     
     private static function get_user_by_author($author)
