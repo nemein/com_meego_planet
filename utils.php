@@ -1,4 +1,4 @@
-<?php
+?php
 class com_meego_planet_utils
 {
     public static function get_item($identifier)
@@ -109,7 +109,7 @@ class com_meego_planet_utils
         
         // Query matching user so we get the username
         $person = new midgard_person($author);
-        $authors[$author] = $users[0]->firstname;
+        $authors[$author] = $person->firstname;
         return $authors[$author];
     }
     
