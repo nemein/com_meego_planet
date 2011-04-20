@@ -60,11 +60,17 @@ class com_meego_planet_controllers_feeds extends midgardmvc_core_controllers_bas
         $this->object = new com_meego_planet_feed($args['feed']);
 
         midgardmvc_core::get_instance()->head->set_title($this->object->title);
+
+        midgardmvc_core::get_instance()->head->enable_jquery_ui();
+        midgardmvc_core::get_instance()->head->add_jsfile(MIDGARDMVC_STATIC_URL . '/com_meego_planet/feeds.js');
     }
     
     public function prepare_new_object(array $args)
     {
         $this->object = new com_meego_planet_feed();
+
+        midgardmvc_core::get_instance()->head->enable_jquery_ui();
+        midgardmvc_core::get_instance()->head->add_jsfile(MIDGARDMVC_STATIC_URL . '/com_meego_planet/feeds.js');
     }
     
     public function get_url_read()
@@ -90,5 +96,8 @@ class com_meego_planet_controllers_feeds extends midgardmvc_core_controllers_bas
     public function load_form()
     {
         $this->form = midgardmvc_helper_forms_mgdschema::create($this->object, false);
+        if (!$this->object->guid) {
+            unset($this->form->url);
+        }
     }
 }

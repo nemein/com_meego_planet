@@ -21,6 +21,7 @@ class com_meego_planet_controllers_top
                 {
                     // Primarily order by calculated score tuned by age
                     $q->add_order(new midgard_query_property('agedscore'), SORT_DESC);
+                    $q->set_limit(10);
                 }
             )
         );

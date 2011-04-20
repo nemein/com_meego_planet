@@ -49,7 +49,11 @@ class com_meego_planet_calculate
             return self::prepare_return(0, $modifier);
         }
         
-        $item_data = json_decode($json);  
+        $item_data = json_decode($json);
+        if (!is_array($item_data))
+        {
+            return self::prepare_return(0, $modifier);
+        }
         if (   !isset($item_data[0])
             || !isset($item_data[0]->total_count))
         {

@@ -60,6 +60,10 @@ class com_meego_planet_fetch
 
     public static function import_item(ezcFeedEntryElement $feed_item, $index, com_meego_planet_feed $feed)
     {
+        if (!self::get_item_link($feed_item))
+        {
+            return;
+        }   
         $item = self::get_item_by_url(self::get_item_link($feed_item));
         $item->feed = $feed->id;
 

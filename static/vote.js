@@ -31,6 +31,7 @@ jQuery(document).ready(function() {
             success: function(updatedVotes) {
                 jQuery('[about="' + voted[subject].uri + '"]').find('[property="mgd\\:votesFor"]').text(updatedVotes.votes['1']);
                 jQuery('[about="' + voted[subject].uri + '"]').find('[property="mgd\\:votesAgainst"]').text(updatedVotes.votes['-1']);
+                // TODO: Set button as checked
             },
             error: function(req) {
                 if (req.status === 401) {

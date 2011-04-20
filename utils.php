@@ -97,6 +97,7 @@ class com_meego_planet_utils
     
     public static function page_by_args(midgard_query_select $q, array $args)
     {
+        $q->set_limit(20);
     }
     
     private static function get_user_by_author($author)
@@ -109,15 +110,7 @@ class com_meego_planet_utils
         
         // Query matching user so we get the username
         $person = new midgard_person($author);
-        $qb = new midgard_query_builder('midgard_user');
-        $qb->add_constraint('personguid', '=', $person->guid);
-        $users = $qb->execute();
-        if (count($users) == 0)
-        {
-            return null;
-        }
-        
-        $authors[$author] = $users[0]->login;
+        $authors[$author] = $person->firstname;
         return $authors[$author];
     }
     
