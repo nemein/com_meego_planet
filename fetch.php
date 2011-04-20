@@ -10,7 +10,7 @@ class com_meego_planet_fetch
         $q->execute();
         return $q->list_objects();
     }
-    
+
     public static function fetch_feed(com_meego_planet_feed $feed, $index, $item_callback)
     {
         if (!is_callable($item_callback))
@@ -19,7 +19,7 @@ class com_meego_planet_fetch
         }
 
         midgardmvc_core::get_instance()->component->load_library('Feed');
-        try 
+        try
         {
             $fetched = ezcFeed::parse($feed->feed);
         }
@@ -32,7 +32,7 @@ class com_meego_planet_fetch
         array_walk($items, $item_callback, $feed);
         self::remove_missing($items, $feed);
     }
-    
+
     public static function remove_missing(array $items, com_meego_planet_feed $feed)
     {
         $urls = array_map
@@ -52,17 +52,17 @@ class com_meego_planet_fetch
             }
         );
     }
-    
+
     public static function get_item_link(ezcFeedEntryElement $item)
     {
         return $item->link[0]->href;
     }
-    
+
     public static function import_item(ezcFeedEntryElement $feed_item, $index, com_meego_planet_feed $feed)
     {
         $item = self::get_item_by_url(self::get_item_link($feed_item));
         $item->feed = $feed->id;
-        
+
         $dirty = false;
         if (self::set_item_value($item, 'title', $feed_item->title->text))
         {
@@ -95,17 +95,20 @@ class com_meego_planet_fetch
         {
             return;
         }
-        
-        if (!$item->guid)
+
+        if (strlen($item->url))
         {
-            // New item
-            $item->create();
-            return;
+            if (!$item->guid)
+            {
+                // New item
+                $item->create();
+                return;
+            }
+
+            $item->update();
         }
-        
-        $item->update();
     }
-   
+
     private static function get_item_by_url($url)
     {
         $q = new midgard_query_select
@@ -130,7 +133,7 @@ class com_meego_planet_fetch
             $item->url = $url;
             return $item;
         }
-        
+
         $list_of_items = $q->list_objects();
         return $list_of_items[0];
     }
@@ -146,7 +149,7 @@ class com_meego_planet_fetch
             $item->$property->setTimestamp($value->getTimestamp());
             return true;
         }
-        
+
         if ($item->$property == $value)
         {
             return false;
