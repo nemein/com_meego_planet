@@ -32,6 +32,11 @@ ol.news .avatar {
     border: none;
 }
 
+ol.news .avatar span {
+    display: inline-block;
+    min-width: 70px;
+}
+
 ol.news .votes {
     text-align: right;
     margin-bottom: 0.5em;
