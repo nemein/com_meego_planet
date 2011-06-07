@@ -37,7 +37,21 @@ class com_meego_planet_calculate
             return self::prepare_return(0, $modifier);
         }
         
-        return self::prepare_return(count($item_data->results), $modifier);
+        $total_count = 0;
+        while (isset($item_data->next_page))
+        {
+            $total_count += count($item_data->results);
+            $json = @file_get_contents('http://search.twitter.com/search.json' . $item_data->next_page);
+            if (empty($json))
+            {
+                $item_data = (object) array('results' => array());
+                break;
+            }
+            $item_data = json_decode($json);
+        }
+        $total_count += count($item_data->results);
+
+        return self::prepare_return($total_count, $modifier);
     }
 
     public static function facebook($url, $modifier = 1)
