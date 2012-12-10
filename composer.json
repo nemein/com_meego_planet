@@ -2,7 +2,6 @@
   "name": "nemein/com-meego-planet",
   "type": "library",
   "description": "Blog aggregator component for Midgard MVC",
-  "keywords": ["rating"],
   "license": "LGPL",
   "authors": [
     {
