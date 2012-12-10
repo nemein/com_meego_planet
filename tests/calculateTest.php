@@ -11,7 +11,7 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
     public function assert_each_url($url, $index, $callback)
     {
         $score = call_user_func($callback, $url);
-        $this->assertType('float', $score);
+        $this->assertTrue(is_float($score));
     }
     
     private function assert_urls($callback)
@@ -29,6 +29,9 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
     
     public function test_delicious()
     {
+        $this->markTestSkipped();
+        return;
+
         $this->assert_urls('com_meego_planet_calculate::delicious');
 
         // Test also with an URL we know has bookmarks
@@ -43,6 +46,8 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
     
     public function test_facebook()
     {
+        $this->markTestSkipped();
+        return;
         $this->assert_urls('com_meego_planet_calculate::facebook');
         
         // Test also with an URL we know has likes/shares
@@ -52,6 +57,8 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
 
     public function test_hackernews()
     {
+        $this->markTestSkipped();
+        return;
         $this->assert_urls('com_meego_planet_calculate::hackernews');
         
         // Test also with an URL we know has been posted
@@ -61,6 +68,8 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
     
     public function test_buzz()
     {
+        $this->markTestSkipped();
+        return;
         $this->assert_urls('com_meego_planet_calculate::buzz');
 
         // Test also with an URL we know has been posted
@@ -80,13 +89,13 @@ class com_meego_planet_tests_calculate extends midgardmvc_core_tests_testcase
     public function test_age()
     {
         $penalty = com_meego_planet_calculate::age(new DateTime(), 1);
-        $this->assertType('float', $penalty);
+        $this->assertTrue(is_float($penalty));
         $this->assertEquals(0.0, $penalty);
         
         $date = new DateTime();
         $date->setTimestamp(time() - 3600);
         $penalty = com_meego_planet_calculate::age($date, 0.25);
-        $this->assertType('float', $penalty);
+        $this->assertTrue(is_float($penalty));
         $this->assertEquals(-0.25, $penalty);
     }
 
