@@ -1,0 +1,26 @@
+{
+  "name": "nemein/com-meego-planet",
+  "type": "library",
+  "description": "Blog aggregator component for Midgard MVC",
+  "keywords": ["rating"],
+  "license": "LGPL",
+  "authors": [
+    {
+      "name": "Henri Bergius",
+      "email": "henri.bergius@iki.fi",
+      "homepage": "http://bergie.iki.fi/"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.2.0"
+  },
+  "require": {
+    "midgard/midgardmvc-helper-forms": "dev-master",
+    "zetacomponents/feed": "dev-master",
+    "midgard/midgardmvc-core": "dev-master"
+  },
+  "autoload": {
+    "classmap": ["."]
+  }
+}
